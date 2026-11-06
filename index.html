@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HYBRID ATHLETE">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>HYBRID ATHLETE</title>
+<style>
+:root{--bg:#101114;--panel:#191b20;--panel2:#20232a;--line:#30343d;--text:#f3f4f6;--muted:#9da3ae;--accent:#c8a96b;--green:#8fc7a0;--red:#d98b8b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:88px}
+header{padding:26px 20px 18px;background:linear-gradient(140deg,#24262b,#111216 70%);border-bottom:1px solid var(--line)}
+.kicker{color:var(--accent);font-size:11px;letter-spacing:2px;font-weight:800}
+h1{font-size:25px;letter-spacing:1.5px;margin:7px 0 4px}header p{color:var(--muted);margin:0;font-size:13px}
+main{max-width:760px;margin:auto;padding:18px 15px}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#17191eee;border-top:1px solid var(--line);padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:5;backdrop-filter:blur(14px)}
+.tabs button{background:none;border:0;color:var(--muted);font-size:11px;padding:5px 4px;min-width:60px}
+.tabs button.active{color:var(--accent)}.tabs b{display:block;font-size:19px;margin-bottom:3px;font-weight:500}
+h2{font-size:19px;margin:4px 0 14px}h3{font-size:15px;margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:11px}
+.stat{font-size:24px;font-weight:700;margin:7px 0 2px}.muted,.small{color:var(--muted)}.small{font-size:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pill{font-size:11px;color:var(--accent);border:1px solid #65563b;border-radius:99px;padding:5px 8px;white-space:nowrap}
+button.primary,button.secondary,button.danger{border-radius:10px;padding:11px 13px;font-weight:650;border:1px solid var(--line);color:var(--text);background:var(--panel2)}
+button.primary{background:var(--accent);color:#151515;border-color:var(--accent)}button.danger{color:var(--red)}
+button:active{transform:scale(.98)}.full{width:100%;margin-top:8px}
+.session{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.session:last-child{border:0}
+input,select,textarea{width:100%;background:#111318;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit;margin-top:5px}
+label{font-size:12px;color:var(--muted);display:block;margin:10px 0}
+.exercise{border-top:1px solid var(--line);padding:12px 0}.exercise:first-child{border:0}
+.exercise label{display:inline-block;width:31%;margin:7px 1% 0 0}.exercise input{padding:8px}
+.check{display:flex;align-items:center;gap:9px;color:var(--text);font-size:14px;margin:9px 0}.check input{width:19px;height:19px;margin:0;accent-color:var(--accent)}
+.hidden{display:none!important}.tag{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.progress{height:7px;background:#30343d;border-radius:8px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:var(--accent);width:0}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:10px 5px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:500}
+.note{font-size:12px;line-height:1.5;color:var(--muted)}
+</style>
+</head>
+<body>
+<header><div class="kicker">PERFORMANCE • DISCIPLINE • PROGRESSION</div><h1>HYBRID ATHLETE</h1><p>Ton espace d'entraînement — version premium</p></header>
+<main>
+<section id="home">
+ <div class="row"><h2>Tableau de bord</h2><span class="pill" id="today"></span></div>
+ <div class="grid">
+  <div class="card"><div class="tag">Séances validées</div><div class="stat" id="count">0</div><div class="small">Cette semaine</div></div>
+  <div class="card"><div class="tag">Volume course</div><div class="stat" id="km">0 km</div><div class="small">Cette semaine</div></div>
+ </div>
+ <div class="card"><h3>Objectifs</h3><div class="session"><span>Développer un profil hybride</span><span class="pill">Priorité</span></div><div class="session"><span>Endurance et vitesse en course</span><span class="pill">Course</span></div><div class="session"><span>Force utile au judo</span><span class="pill">Force</span></div><div class="session"><span>Entretenir la natation</span><span class="pill">Technique</span></div></div>
+ <div class="card"><div class="row"><h3>Ta prochaine séance</h3><span class="pill">À adapter</span></div><p class="muted" id="next">Choisis une séance dans l'onglet Entraînement.</p><button class="primary full" onclick="show('sessions')">Voir les séances</button></div>
+ <div class="card"><h3>Règle de planification</h3><p class="note">Avec les gardes de 24 h, organise tes séances dans l'ordre de priorité plutôt que par jours fixes. Après une garde difficile : récupération ou repos. Évite d'enchaîner deux séances intenses. Ajuste le volume selon la fatigue et les contraintes de la semaine.</p></div>
+</section>
+<section id="sessions" class="hidden">
+ <h2>Bibliothèque d'entraînement</h2><p class="note">Sélectionne une séance pour afficher son contenu, renseigner tes charges et l'enregistrer.</p>
+ <div id="sessionList"></div>
+</section>
+<section id="plan" class="hidden">
+ <h2>Planning flexible</h2>
+ <div class="card"><h3>Ordre de priorité hebdomadaire</h3>
+ <div class="session"><div><b>1. Judo</b><div class="small">1 à 3 séances selon club et récupération</div></div><span class="pill">Spécifique</span></div>
+ <div class="session"><div><b>2. Force</b><div class="small">2 séances full body / dominante différente</div></div><span class="pill">Force</span></div>
+ <div class="session"><div><b>3. Course facile</b><div class="small">1 sortie EF, progression du volume</div></div><span class="pill">Aérobie</span></div>
+ <div class="session"><div><b>4. Course qualité</b><div class="small">1 séance : fractionné OU côtes</div></div><span class="pill">Vitesse</span></div>
+ <div class="session"><div><b>5. Natation</b><div class="small">1 séance technique / endurance facultative</div></div><span class="pill">Option</span></div>
+ <div class="session"><div><b>6. Sortie longue / tempo</b><div class="small">En alternance selon fatigue et objectif</div></div><span class="pill">Option</span></div>
+ </div>
+ <div class="card"><h3>Exemple de rotation</h3><p class="note">Ne cherche pas à tout placer chaque semaine. Sur une semaine chargée, conserve judo + 2 forces ou judo + 2 courses. Sur une semaine favorable, ajoute une séance de natation et une deuxième course facile. Le dimanche sport collectif peut remplacer une séance cardio intense.</p></div>
+ <div class="card"><h3>Planifier une garde</h3><label>Statut du jour<select id="duty"><option>Repos / disponible</option><option>Garde 24 h</option><option>Récupération après garde</option></select></label><label>Énergie du jour<select id="energy"><option>Bonne</option><option>Moyenne</option><option>Basse</option></select></label><button class="primary full" onclick="adapt()">Obtenir une recommandation</button><p id="advice" class="note"></p></div>
+</section>
+<section id="tracking" class="hidden">
+ <h2>Suivi des performances</h2>
+ <div class="grid"><div class="card"><div class="tag">Séances enregistrées</div><div class="stat" id="allCount">0</div></div><div class="card"><div class="tag">Distance totale</div><div class="stat" id="allKm">0 km</div></div></div>
+ <div class="card"><h3>Ajouter une sortie course</h3><label>Distance (km)<input id="runKm" type="number" min="0" step=".1" placeholder="Ex. 8.5"></label><label>Durée (minutes)<input id="runTime" type="number" min="0" placeholder="Ex. 48"></label><label>Type<select id="runType"><option>Endurance fondamentale</option><option>Fractionné</option><option>Côtes</option><option>Tempo</option><option>Sortie longue</option><option>Sport collectif</option></select></label><button class="primary full" onclick="addRun()">Enregistrer la sortie</button></div>
+ <div class="card"><h3>Historique</h3><div id="history" class="note">Aucune séance enregistrée.</div><button class="danger full" onclick="clearData()">Effacer les données locales</button></div>
+</section>
+<section id="detail" class="hidden">
+ <div class="row"><button class="secondary" onclick="show('sessions')">← Séances</button><span class="pill" id="detailTag"></span></div>
+ <h2 id="detailTitle" style="margin-top:16px"></h2><p class="note" id="detailDesc"></p>
+ <div class="card"><div class="row"><h3>Contenu de la séance</h3><span class="small" id="detailDuration"></span></div><div id="exerciseList"></div><label>Notes de séance<textarea id="sessionNote" rows="3" placeholder="Sensations, difficulté, ajustements..."></textarea></label><button class="primary full" onclick="saveSession()">Valider la séance</button></div>
+</section>
+</main>
+<nav class="tabs">
+ <button class="active" data-page="home" onclick="show('home')"><b>⌂</b>Accueil</button>
+ <button data-page="plan" onclick="show('plan')"><b>▦</b>Planning</button>
+ <button data-page="sessions" onclick="show('sessions')"><b>◈</b>Séances</button>
+ <button data-page="tracking" onclick="show('tracking')"><b>↗</b>Suivi</button>
+</nav>
+<script>
+const sessions=[
+{id:'strengthA',name:'Force — Full body A',tag:'Musculation',duration:'55–65 min',desc:'Force générale et transfert vers le judo. Garde 1 à 3 répétitions en réserve, technique prioritaire.',items:[['Squat ou goblet squat','4 × 5–6','2–3 min'],['Tractions ou tirage vertical','4 × 6–8','2 min'],['Développé couché ou pompes lestées','3 × 6–10','2 min'],['Soulevé de terre roumain léger','3 × 8','2 min'],['Gainage anti-rotation (Pallof)','3 × 10 / côté','60 s']]},
+{id:'strengthB',name:'Force — Full body B',tag:'Musculation',duration:'50–60 min',desc:'Force unilatérale, tirage et stabilité. Adapte les amplitudes à ta mobilité et à ta technique.',items:[['Fentes ou split squat','3 × 8 / jambe','90 s'],['Rowing haltère ou poulie','4 × 8–10','90 s'],['Développé militaire haltères','3 × 8','90 s'],['Hip thrust','3 × 8–10','90 s'],['Farmer walk','4 × 30 m','60–90 s'],['Dead bug','3 × 8 / côté','45 s']]},
+{id:'runEasy',name:'Course — Endurance fondamentale',tag:'Course',duration:'35–60 min',desc:'Allure confortable, respiration maîtrisée, conversation possible. Augmente la durée progressivement.',items:[['Échauffement progressif','10 min','—'],['Course facile','20–45 min','Continu'],['Retour au calme','5 min','—']]},
+{id:'runIntervals',name:'Course — Fractionné',tag:'Course',duration:'40–50 min',desc:'Une séance de qualité par semaine maximum au départ. Récupération en trottinant ou marchant.',items:[['Échauffement + mobilité dynamique','15 min','—'],['Efforts rapides','6 × 2 min','2 min facile'],['Retour au calme','10 min','—']]},
+{id:'runHills',name:'Course — Côtes',tag:'Course',duration:'35–45 min',desc:'Puissance et technique de foulée. Côtes régulières, effort tonique sans sprint maximal.',items:[['Échauffement facile','15 min','—'],['Montées en côte','8 × 20 s','Descente en marchant'],['Retour au calme','10 min','—']]},
+{id:'runTempo',name:'Course — Tempo',tag:'Course',duration:'40–55 min',desc:'Effort soutenu mais contrôlé, sans finir à bloc. À alterner avec les côtes ou le fractionné.',items:[['Échauffement','15 min','—'],['Allure tempo','3 × 8 min','2 min facile'],['Retour au calme','10 min','—']]},
+{id:'judo',name:'Judo — Préparation physique',tag:'Judo',duration:'25–35 min',desc:'À placer loin d’un randori dur ou à faible dose. Qualité d’exécution avant la fatigue.',items:[['Corde infinie','4 × 30 s','30 s'],['Rameur ou SkiErg','4 × 45 s','45 s'],['Déplacements / uchi-komi','4 × 45 s','45 s'],['Récupération active','5 min','—']]},
+{id:'swim',name:'Natation — Technique et endurance',tag:'Natation',duration:'30–40 min',desc:'Nage relâchée, séries courtes si les épaules fatiguent. Repos dès que la technique se dégrade.',items:[['Échauffement facile','200 m','30 s'],['Éducatifs (rattrapé, poings fermés)','6 × 25 m','20 s'],['Nage facile','6 × 50 m','30 s'],['Retour au calme','100 m','—']]},
+{id:'recovery',name:'Récupération — Mobilité',tag:'Récupération',duration:'15–20 min',desc:'Séance douce. Aucun mouvement ne doit augmenter une douleur.',items:[['Marche facile','5 min','—'],['Mobilité hanches et chevilles','2 × 45 s','30 s'],['Mobilité thoracique','2 × 8 / côté','30 s'],['Respiration lente','3 min','—']]}
+];
+let current=null;
+let data=JSON.parse(localStorage.getItem('hybridData')||'{"logs":[],"runs":[]}');
+function persist(){localStorage.setItem('hybridData',JSON.stringify(data));refresh()}
+function show(page){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(page).classList.remove('hidden');document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='home'||page==='tracking')refresh()}
+function renderSessions(){document.getElementById('sessionList').innerHTML=sessions.map(s=>`<div class="card"><div class="row"><div><h3>${s.name}</h3><div class="small">${s.duration}</div></div><span class="pill">${s.tag}</span></div><button class="secondary full" onclick="openSession('${s.id}')">Ouvrir la séance</button></div>`).join('')}
+function openSession(id){current=sessions.find(s=>s.id===id);document.getElementById('detailTitle').textContent=current.name;document.getElementById('detailTag').textContent=current.tag;document.getElementById('detailDesc').textContent=current.desc;document.getElementById('detailDuration').textContent=current.duration;document.getElementById('sessionNote').value='';document.getElementById('exerciseList').innerHTML=current.items.map((e,i)=>`<div class="exercise"><div class="row"><b>${e[0]}</b><span class="small">${e[2]}</span></div><div class="small">${e[1]}</div><label>Charge / rep<input id="load${i}" placeholder="Poids, distance ou sensation"></label><label>Fait<input type="checkbox" id="done${i}" style="width:20px;height:20px;vertical-align:middle"></label></div>`).join('');show('detail')}
+function saveSession(){if(!current)return;let done=current.items.filter((e,i)=>document.getElementById('done'+i).checked).length;data.logs.unshift({date:new Date().toISOString(),name:current.name,done,total:current.items.length,note:document.getElementById('sessionNote').value});persist();show('tracking')}
+function addRun(){let km=Number(document.getElementById('runKm').value),time=Number(document.getElementById('runTime').value);if(!km||km<=0){alert('Renseigne une distance valide.');return}data.runs.unshift({date:new Date().toISOString(),km,time,type:document.getElementById('runType').value});document.getElementById('runKm').value='';document.getElementById('runTime').value='';persist()}
+function refresh(){let weekAgo=Date.now()-7*86400000;let recent=data.logs.filter(x=>new Date(x.date).getTime()>weekAgo);let runs=data.runs.filter(x=>new Date(x.date).getTime()>weekAgo);let km=runs.reduce((a,b)=>a+b.km,0);document.getElementById('count').textContent=recent.length;document.getElementById('km').textContent=km.toFixed(1)+' km';document.getElementById('allCount').textContent=data.logs.length+data.runs.length;document.getElementById('allKm').textContent=data.runs.reduce((a,b)=>a+b.km,0).toFixed(1)+' km';let all=[...data.logs,...data.runs].sort((a,b)=>new Date(b.date)-new Date(a.date));document.getElementById('history').innerHTML=all.length?all.slice(0,15).map(x=>`<div class="session"><div><b>${x.name||x.type}</b><div class="small">${new Date(x.date).toLocaleDateString('fr-FR')} ${x.done!==undefined?'• '+x.done+'/'+x.total+' exercices':''}</div></div><b>${x.km!==undefined?x.km+' km':''}</b></div>`).join(''):'Aucune séance enregistrée.';document.getElementById('next').textContent=all.length?'Dernière activité : '+(all[0].name||all[0].type)+'. Choisis la prochaine séance selon ta récupération.':'Commence par une séance facile ou une séance de force.'}
+function clearData(){if(confirm('Effacer tout l’historique enregistré sur cet appareil ?')){data={logs:[],runs:[]};persist()}}
+function adapt(){let d=document.getElementById('duty').value,e=document.getElementById('energy').value;let msg=d.includes('Garde')?'Garde 24 h : repos ou mobilité courte si une fenêtre réelle se présente. Ne cherche pas à rattraper une séance.':d.includes('Récupération')?'Après garde : marche ou récupération douce. Reprends l’intensité lorsque sommeil et énergie sont revenus.':e==='Basse'?'Énergie basse : récupération ou endurance très facile. Évite fractionné, côtes et force lourde.':e==='Moyenne'?'Énergie moyenne : séance technique, force modérée ou endurance facile. Réduis le volume si nécessaire.':'Énergie bonne : réalise la prochaine séance prioritaire de ta rotation, sans cumuler deux séances intenses.';document.getElementById('advice').textContent=msg}
+document.getElementById('today').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});renderSessions();refresh();
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  });
+}
+</script>
+</body></html>
